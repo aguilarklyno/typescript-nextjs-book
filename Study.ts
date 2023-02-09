@@ -29,16 +29,33 @@ const mixArrayU: (string | number)[] = ["foo", 1] //union型
 const mixArrayT: [string, number] = ["foo", 1] //タプル
 
 // string型のnameとnumber型のageのみを持つオブジェクトの型を定義
-const user: { name: string; age: number } = {
-  name: "Takeru",
-  age: 36
-}
+// const user: { name: string; age: number } = {
+//   name: "Takeru",
+//   age: 36
+// }
 
 console.log(user.name)
 console.log(user.age)
 
-function peintName(obj: { firstName: string; lastName?: string }) {
-  
+function printName(obj: { firstName: string; lastName?: string }) {
+  // ...
 }
+
+printName({ firstName: "Takuya" })
+printName({ firstName: "Takuya", lastName: "Tejima" })
+
+let user: any = { firstName: "Takuya" }
+// 以下の行のコードはいずれもコンパイルエラーが起こりません。
+user.hello()
+user()
+user.age = 100
+user = "hello"
+
+// 他の方への代入を行ってもエラーが起きません
+const n: number = user
+
+
+
+
 
 
