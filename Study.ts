@@ -34,8 +34,8 @@ const mixArrayT: [string, number] = ["foo", 1] //タプル
 //   age: 36
 // }
 
-console.log(user.name)
-console.log(user.age)
+// console.log(user.name)
+// console.log(user.age)
 
 function printName(obj: { firstName: string; lastName?: string }) {
   // ...
@@ -53,6 +53,47 @@ user = "hello"
 
 // 他の方への代入を行ってもエラーが起きません
 const n: number = user
+
+// function sayHello( name: string): string{
+//   return `Hello ${name}`
+// }
+// sayHello( "Takuya" )
+
+// function sayHello( name: string, greeting?: string): string {
+//   return `${greeting} ${name}`
+// }
+
+// sayHello("Takuya") //Takuya
+// sayHello("Takuya", "Hello") //Hello Takuya
+
+function sayHello(name: string, greeting: string = "Hello"): string {
+  return `${greeting} ${name}`
+}
+
+sayHello("Takuya") //Hello Takuya
+sayHello("Takuya", "Hey") //Hey Takuya
+
+function printName(firstName: string. formatter: (name: string) => string) {
+  console.log(formatter(firstName))
+}
+
+function formatName(name: string): string {
+  return `${name} san`
+}
+
+printName( "Takuya", formatName) //Takuya san
+
+function genBirdsInfo(name: string) : string[]{
+  return name.split(',')
+}
+
+// 関数の型を利用
+// (x: string) => string[]
+function singBirds(birdInfo: (x: string) => string[]): string{
+  return birdInfo("hato, kiji")[0] + "piyo piyo"
+}
+
+
 
 
 
