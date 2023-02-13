@@ -357,8 +357,45 @@ queue.push("hoge") //number型ではないのでコンパイル時エラーに�
 let str = "fuga"
 str = queue.pop() // strはnumber型ではないのでコンパイル時エラーになります
 
+//変数や引数の宣言時にUnion型を指定して、numberもしくはstringを受け付けることができます
+function PictureId(id: number | string) {
+  console.log(id)
+}
+
+let postStatus: "draft" | "published" | "deleted"
+postStatus = "draft" //OK
+postStatus = "drafts" //型宣言にない文字列が割り当てられているため、コンパイル時エラー
+
+function addOne(value: number | string) {
+  if (typeof value === "string") {
+    return Number(value) + 1
+  }
+  return value + 1
+}
+
+console.log(addOne(10)) //11
+console.log(addOne("20")) //21
+
+//オプショナルプロパティでinfoを定義します
+type User = {
+  info?: {
+    name: string;
+    age: number;
+  }
+}
+
+let response = {}
+//responseはJson形式のAPIレスポンスが代入されている想定、Userに固アサーションします
+const user= {response as any} as User
 
 
+function fetchFromServer(id: string): Promise<{success: boolean}> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({success: true})
+    }, 100)
+  })
+}
 
 
 
