@@ -221,8 +221,141 @@ interface Circle {
 }
 
 //複数のインターフェースを継承して新たなインターフェースを定義できます
+interface ColorfulCircle extends Colorful, Circle {}
 
+const cc: ColorfulCircle = {
+  color: "赤",
+  radius: 10
+}
 
+class Point {
+  x: number;
+  y: number;
+
+//引数がない場合の初期値を指定します
+  constructor(x: number = 0, y: number = 0) {
+    this.x = x 
+    this.y = y 
+  }
+
+  moveX(n: number): void{
+    this.x += n
+  }
+
+  moveY(n: number): void{
+    this.y += n
+  }
+}
+
+const point = new Point()
+point.moveX(10)
+console.log(`${point.x}, ${point.y}`) //10,0
+
+class Point3D extends Point {
+  z: number;
+  constructor(x: number = 0, y: number = 0, z: number = 0) {
+    //継承元のコンストラクタを呼び出す
+    super(x, y)
+    this. z = z
+  }
+
+  moveZ(n: number): void {
+    this.z += n
+  }
+}
+
+const point3D = new Point3D()
+//継承元のメソッドを呼び出すことができる
+point3D.moveX(10)
+point3D.moveZ(20)
+console.log(`${point3D.x}, ${point3D.y}, ${point3D.z}`) // 10, 0, 20
+
+interface IUser {
+  name: string;
+  age: number;
+  sayHello: () => string; // 引数なしで文字列を返す
+}
+
+class User implements IUser {
+  name: string;
+  age: number;
+
+  constructor() {
+    this.name = ""
+    this.age = 0
+  }
+
+  //インターフェースに定義されているメソッドを実装しない場合、コンパイル時エラーになります
+  sayHello(): string{
+    return`こんにちは、私は${this.name}、${this.age}歳です。`
+  }
+}
+
+const user = new User()
+user.name = "Takuya"
+user.age = 36
+console.log(user.sayHello()) //こんにちは、私はTakuya、36歳です
+
+class BasePoint3D {
+  public x: number;
+  private y: number;
+  protected z: number;
+}
+
+//インスタンスかを行った場合のアクセス制御の例です
+const basePoint = new BasePoint3D()
+basePoint.x //OK
+basePoint.y //コンパイル時エラーが起きます
+basePoint.z //コンパイル時エラーが起きます。protectedもアクセスできません
+
+//クラスを継承した際のアクセス制御
+class ChildPoint extends BasePoint3D{
+  constructor() {
+    super()
+    this.x //Ok
+    this.y //コンパイル時エラーが起きます。Privateであるためアクセスできません
+    this.z //コンパイル時エラーが起きます。Protectedであるためアクセスできません
+  }
+}
+
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+}
+
+//enum Diretion を参照
+let direction: Direction = Direction.Left
+//2 という数字が出力される
+console.log(direction)
+
+//enum を代入した変数に別の方の値を代入しようとするとエラーになります
+direction = "Left"
+
+//T はクラス内で利用する仮の方の名前です
+class Queue<T> {
+  //内部にTの型の配列を初期化
+  private array: T[]
+
+  //Tの方の値を配列に追加します
+  push(item: T) {
+    this.array.push(item)
+  }
+
+  //Tの型の配列最初の値を取り出します。
+  pop(): T | undefined {
+    return this.array.shift()
+  }
+}
+
+const queue = new Queue<number>() //数値型を扱うキュー作成します。
+queue.push(111)
+queue.push(112)
+queue.push("hoge") //number型ではないのでコンパイル時エラーになります
+
+let str = "fuga"
+str = queue.pop() // strはnumber型ではないのでコンパイル時エラーになります
 
 
 
